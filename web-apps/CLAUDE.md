@@ -4,13 +4,18 @@ This file contains project-specific instructions for Claude Code and other AI co
 
 **Important**: When the user tells you to use a certain pattern or workflow, add it to this file so it's remembered in future sessions.
 
+## Agent Usage
+
+Use the following agents proactively for their corresponding tasks:
+
+- **codebase-researcher**: Before making substantial additions or changes, use this agent to understand existing patterns, architecture, and implementation details
+- **code-change-reviewer**: After completing code changes, use this agent to review for bugs, logic errors, and potential issues before committing
+- **test-runner**: After modifying code, use this agent to run tests and verify changes work correctly
+- **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
+
 ## Project Overview
 
-<!-- Replace with your app description -->
-A web application built with React Router (Remix) featuring:
-- [Key feature 1]
-- [Key feature 2]
-- [Key feature 3]
+A web application built with React Router (Remix).
 
 ## Development
 
@@ -47,28 +52,15 @@ npm run test:ui       # Run tests with Playwright UI
 ### Deployment
 
 - **Do not run deploy commands automatically** - let the user deploy manually
-<!-- Add your deploy command here, e.g.: -->
-<!-- - Deploy command: `fly deploy` -->
 
 ## Tech Stack
 
 - **Framework**: React Router v7 (Remix)
 - **Styling**: Tailwind CSS v4
-<!-- Add other tech as needed -->
 
 ## Key Files
 
-<!-- Customize based on your project structure -->
 - `app/routes/` - Page routes and loaders
 - `app/components/` - Reusable UI components
 - `app/context/` - React Context providers
 - `app/lib/` - Server-side utilities
-
-## Environment Variables
-
-<!-- List your environment variables -->
-```
-# Example:
-# DATABASE_URL=
-# API_KEY=
-```

@@ -4,14 +4,21 @@ This file contains project-specific instructions for Claude Code and other AI co
 
 **Important**: When the user tells you to use a certain pattern or workflow, add it to this file so it's remembered in future sessions.
 
+## Agent Usage
+
+Use the following agents proactively for their corresponding tasks:
+
+- **codebase-researcher**: Before making substantial additions or changes, use this agent to understand existing patterns, architecture, and implementation details
+- **code-change-reviewer**: After completing code changes, use this agent to review for bugs, logic errors, and potential issues before committing
+- **test-runner**: After modifying code, use this agent to run tests and verify changes work correctly
+- **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
+
 ## Project Overview
 
-<!-- Replace with your app description -->
-React Native/Expo app for [description].
+React Native/Expo mobile application.
 
 ## Important Files
 
-<!-- Customize based on your project structure -->
 - `src/utils/` - Utility functions and helpers
 - `src/hooks/` - Custom React hooks
 - `src/context/` - React Context providers for state management
@@ -20,7 +27,6 @@ React Native/Expo app for [description].
 
 ## Environment Setup
 
-<!-- If using a backend service like Supabase, Firebase, etc. -->
 ### Environment Files
 
 - `.env.local` - Used during development
