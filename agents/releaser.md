@@ -1,6 +1,7 @@
 ---
 name: releaser
 description: Use this agent when the user wants to build and release/deploy the project to production or a specific platform. This includes requests to 'release', 'deploy', 'ship', 'publish', or 'push to production'. The agent ensures all tests pass, changes are committed to git, and then executes the appropriate build and release process for the target platform.\n\nExamples:\n\n<example>\nContext: User has finished implementing a feature and wants to release it.\nuser: "I'm done with the feature, let's release it"\nassistant: "I'll use the releaser agent to handle the release process."\n<Task tool call to releaser agent>\n</example>\n\n<example>\nContext: User wants to deploy to production after completing work.\nuser: "Deploy this to production"\nassistant: "Let me launch the releaser agent to build and deploy to production."\n<Task tool call to releaser agent>\n</example>\n\n<example>\nContext: User asks to ship the current state of the project.\nuser: "Ship it!"\nassistant: "I'll use the releaser agent to ensure tests pass, commit any changes, and release the project."\n<Task tool call to releaser agent>\n</example>\n\n<example>\nContext: User wants to publish to a specific platform.\nuser: "Publish this to the App Store"\nassistant: "I'll launch the releaser agent to handle the App Store release process."\n<Task tool call to releaser agent>\n</example>
+tools: Glob, Grep, Read, WebFetch, TodoWrite, WebSearch, BashOutput, Bash, Skill, SlashCommand
 model: opus
 ---
 
