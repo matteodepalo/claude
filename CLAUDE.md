@@ -55,6 +55,10 @@ Projects to curate CLAUDE.md files for are located in `~/Projects`:
 2. Fill in project-specific details (overview, key files, environment setup)
 3. The Agent Usage section is already included
 
+## Commands
+
+- `/sync` - Sync agent files from `~/.claude/agents/` to this repository (source of truth is `~/.claude/agents/`)
+
 ## Workflow
 
 After making any changes to this repository, always push to GitHub:
