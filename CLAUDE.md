@@ -57,7 +57,7 @@ Projects to curate CLAUDE.md files for are located in `~/Projects`:
 
 ## Commands
 
-- `/sync` - Sync agents and commands from `~/.claude/` to this repository (source of truth is `~/.claude/`)
+- `/sync` - Sync agents and commands from `~/.claude/`, then update templates based on common patterns found in `~/Projects`
 
 ## Workflow
 

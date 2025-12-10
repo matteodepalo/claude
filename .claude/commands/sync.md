@@ -1,9 +1,33 @@
-Sync the agent and command files in this repository with the actual files used by Claude Code.
+Sync Claude Code configuration and update templates based on actual projects.
+
+## Part 1: Sync from ~/.claude/
 
 The source of truth is `~/.claude/`. Copy all files from there to this repository.
 
-Steps:
 1. Sync agents: Compare files in `~/.claude/agents/` with `agents/` in this repo, copy any that are newer or different
 2. Sync commands: Compare files in `~/.claude/commands/` with `.claude/commands/` in this repo, copy any that are newer or different
-3. Report what was synced
-4. If changes were made, commit and push to GitHub with a descriptive message
+
+## Part 2: Update templates from ~/Projects
+
+Scan all projects in `~/Projects` that have a CLAUDE.md file:
+
+1. Identify each project's type:
+   - Mobile (React Native/Expo): Look for `app.json`, `expo` in package.json
+   - Web (React Router/Remix): Look for `react-router` or `@remix-run` in package.json
+
+2. For each project type, analyze the CLAUDE.md files and extract common patterns:
+   - Common sections and structure
+   - Shared commands (dev, build, test)
+   - Common rules and workflows
+   - MCP tools usage patterns
+
+3. Update the templates in this repo:
+   - `mobile-apps/CLAUDE.md` - Update with common patterns from mobile projects
+   - `web-apps/CLAUDE.md` - Update with common patterns from web projects
+
+4. Keep templates generic (no project-specific details) but include all common sections and patterns found across projects of that type.
+
+## Part 3: Finish
+
+1. Report what was synced and updated
+2. If changes were made, commit and push to GitHub with a descriptive message
