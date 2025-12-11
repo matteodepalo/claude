@@ -27,7 +27,17 @@ Scan all projects in `~/Projects` that have a CLAUDE.md file:
 
 4. Keep templates generic (no project-specific details) but include all common sections and patterns found across projects of that type.
 
-## Part 3: Finish
+## Part 3: Sync agents to project CLAUDE.md files
+
+For each project in `~/Projects` that has a CLAUDE.md file with an "Agent Usage" section:
+
+1. Compare the agents listed in the project's CLAUDE.md against all agents in `~/.claude/agents/`
+2. For any agent in `~/.claude/agents/` that is NOT listed in the project's Agent Usage section, add it
+3. Use this format for new agent entries: `- **agent-name**: <description from agent file>`
+4. Insert new agents at the top of the agent list (after the intro text, before existing agents)
+5. Do NOT remove any project-specific agents that aren't in `~/.claude/agents/` (they may be custom to that project)
+
+## Part 4: Finish
 
 1. Report what was synced and updated
 2. If changes were made, commit and push to GitHub with a descriptive message
