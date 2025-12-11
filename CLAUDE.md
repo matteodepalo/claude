@@ -16,6 +16,7 @@ agents/           # Custom subagent definitions
   releaser.md
   codebase-researcher.md
   code-change-reviewer.md
+  feature-architect.md
 mobile-apps/      # Template for React Native/Expo projects
   CLAUDE.md
 web-apps/         # Template for React Router/Remix projects
@@ -30,6 +31,7 @@ web-apps/         # Template for React Router/Remix projects
 | releaser | sonnet | Handle deployments and releases |
 | codebase-researcher | opus | Research codebase before substantial changes |
 | code-change-reviewer | opus | Review code for bugs and issues |
+| feature-architect | opus | Plan features with architecture diagrams |
 
 Agents are generic and read project-specific details from each project's CLAUDE.md file.
 

@@ -8,6 +8,7 @@ This file contains project-specific instructions for Claude Code and other AI co
 
 Use the following agents proactively for their corresponding tasks:
 
+- **feature-architect**: When planning new features or significant changes, use this agent to create implementation plans with architecture diagrams
 - **codebase-researcher**: Before making substantial additions or changes, use this agent to understand existing patterns, architecture, and implementation details
 - **code-change-reviewer**: After completing code changes, use this agent to review for bugs, logic errors, and potential issues before committing
 - **test-runner**: After modifying code, use this agent to run tests and verify changes work correctly
@@ -30,6 +31,7 @@ npm run test   # Run acceptance tests
 ### Testing
 
 - **Run acceptance tests (`npm run test`) after making any changes** to ensure nothing is broken
+- **Keep acceptance tests up to date** when adding, removing, or changing features
 - Tests are located in the `e2e/` directory
 - **For manual verification**, use Playwright MCP with `browser_snapshot` for accessibility-based testing
 - **Always test on the local dev server** (http://localhost:5173), not the deployed site
@@ -51,7 +53,7 @@ npm run test:ui       # Run tests with Playwright UI
 
 ### Deployment
 
-- **Do not run deploy commands automatically** - let the user deploy manually
+- Use the releaser agent when asked to deploy, release, ship, or publish
 
 ## Tech Stack
 
@@ -64,3 +66,7 @@ npm run test:ui       # Run tests with Playwright UI
 - `app/components/` - Reusable UI components
 - `app/context/` - React Context providers
 - `app/lib/` - Server-side utilities
+
+## Environment Variables
+
+Create a `.env` file with required environment variables (see `.env.example` if available).
