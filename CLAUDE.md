@@ -27,11 +27,11 @@ web-apps/         # Template for React Router/Remix projects
 
 | Agent | Model | Purpose |
 |-------|-------|---------|
-| test-runner | sonnet | Run tests after code changes |
+| feature-architect | opus | BEFORE any change: analyze codebase, identify refactoring opportunities, create implementation plan |
+| code-change-reviewer | opus | AFTER any change: review for bugs, logic errors, and issues |
+| test-runner | sonnet | Investigate issues/bugs: run tests, analyze failures, diagnose problems |
+| codebase-researcher | opus | Research codebase patterns, architecture, and implementation details |
 | releaser | sonnet | Handle deployments and releases |
-| codebase-researcher | opus | Research codebase before substantial changes |
-| code-change-reviewer | opus | Review code for bugs and issues |
-| feature-architect | opus | Plan features with architecture diagrams |
 
 Agents are generic and read project-specific details from each project's CLAUDE.md file.
 

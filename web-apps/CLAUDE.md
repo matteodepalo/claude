@@ -8,10 +8,10 @@ This file contains project-specific instructions for Claude Code and other AI co
 
 Use the following agents proactively for their corresponding tasks:
 
-- **feature-architect**: When planning new features or significant changes, use this agent to create implementation plans with architecture diagrams
-- **codebase-researcher**: Before making substantial additions or changes, use this agent to understand existing patterns, architecture, and implementation details
-- **code-change-reviewer**: After completing code changes, use this agent to review for bugs, logic errors, and potential issues before committing
-- **test-runner**: After modifying code, use this agent to run tests and verify changes work correctly
+- **feature-architect**: BEFORE any code change, use this agent to analyze the codebase, identify refactoring opportunities, and create an implementation plan
+- **code-change-reviewer**: AFTER any code change, use this agent to review for bugs, logic errors, and issues
+- **test-runner**: When investigating issues, bugs, or unexpected behavior, use this agent to run tests and diagnose problems
+- **codebase-researcher**: When you need to understand existing patterns, architecture, or implementation details
 - **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
 
 ## Project Overview
