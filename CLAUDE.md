@@ -37,11 +37,13 @@ Agents are generic and read project-specific details from each project's CLAUDE.
 
 ## Syncing Agents
 
-After modifying agents, copy them to `~/.claude/agents/` for Claude Code to use:
+**Important**: Whenever you modify any agent file in `agents/`, you MUST also copy it to `~/.claude/agents/` so Claude Code uses the updated version:
 
 ```bash
 cp agents/*.md ~/.claude/agents/
 ```
+
+This must be done every time an agent is changed, before committing.
 
 ## Projects
 
