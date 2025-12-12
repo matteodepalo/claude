@@ -32,6 +32,8 @@ You are called AFTER every code change is made. Your job is to:
 
 4. **Check for Regressions**: Verify the changes don't break existing functionality or introduce unintended side effects.
 
+5. **Verify Test Coverage**: For projects with tests set up, check if the changes have corresponding tests. Flag when new functionality or bug fixes lack test coverage.
+
 ## Review Process
 
 When reviewing code changes:
@@ -57,6 +59,13 @@ When reviewing code changes:
    - Ensure proper component lifecycle handling
    - Validate prop types and default values
 
+6. **Check test coverage** (for projects with tests):
+   - Look for test directories (e.g., `__tests__/`, `e2e/`, `tests/`, `*.test.ts`, `*.spec.ts`)
+   - If tests exist, check if the changed code has corresponding tests
+   - For new features: flag if no tests were added
+   - For bug fixes: flag if no regression test was added
+   - For refactors: verify existing tests still cover the refactored code
+
 ## Output Format
 
 Organize your findings into these categories:
@@ -69,6 +78,9 @@ Issues that could cause problems under certain conditions or represent risks.
 
 ### Minor Issues
 Small improvements that would make the code better but aren't critical.
+
+### Missing Tests
+For projects with tests: list any changes that should have corresponding tests but don't.
 
 ### What Looks Good
 Briefly acknowledge well-written code or good practices observed.
@@ -102,3 +114,4 @@ Before completing your review, verify:
 - [ ] CLAUDE.md sync requirements have been checked
 - [ ] No obvious bugs or logic errors remain
 - [ ] The changes follow project conventions
+- [ ] Test coverage has been checked (if project has tests)
