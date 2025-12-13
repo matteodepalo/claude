@@ -10,13 +10,15 @@ Use the following agents proactively for their corresponding tasks:
 
 - **feature-architect**: BEFORE any code change, use this agent to analyze the codebase, identify refactoring opportunities, and create an implementation plan
 - **code-change-reviewer**: AFTER any code change, use this agent to review for bugs, logic errors, and issues
-- **test-runner**: When investigating issues, bugs, or unexpected behavior, use this agent to run tests and diagnose problems
+- **test-runner**: MUST be called after ANY code change to run the test suite and verify nothing is broken. Also use when investigating issues, bugs, or unexpected behavior
 - **codebase-researcher**: When you need to understand existing patterns, architecture, or implementation details
 - **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
 
 ## Project Overview
 
 React Native/Expo mobile application.
+
+<!-- Add project-specific description here -->
 
 ## Important Files
 
@@ -26,12 +28,16 @@ React Native/Expo mobile application.
 - `src/types/index.ts` - TypeScript type definitions
 - `src/components/` - Reusable UI components
 
+<!-- Add project-specific important files here -->
+
 ## Environment Setup
 
 ### Environment Files
 
 - `.env.local` - Used during development
 - `.env.production` - Production credentials (gitignored)
+
+<!-- Add project-specific environment setup here -->
 
 ## Manual Testing (Development)
 
@@ -51,7 +57,7 @@ This command:
 2. Opens Expo Go in the iOS simulator
 3. Loads your app inside Expo Go
 
-**Note**: Expo Go is only for development. For production builds on physical devices, use `npx expo run:ios` (see Deploying to iPhone section).
+**Note**: Expo Go is only for development. For production builds, use EAS Build and TestFlight.
 
 ### MCP Simulator Tools
 
@@ -68,19 +74,48 @@ This command:
 4. Test interactions by tapping/typing as needed
 5. Never assume a change looks correct - always verify visually
 
-## Deploying to iPhone
+## Deploying to TestFlight
 
-To build and install on the connected iPhone:
+This app uses **EAS Build** and **TestFlight** for deployment.
+
+### Build and Submit to TestFlight
 
 ```bash
-npx expo run:ios --device --configuration Release
+# Build for production and submit to App Store Connect
+eas build --platform ios --profile production --auto-submit
 ```
 
-This creates a self-contained app with the JS bundle embedded. The app works standalone without a dev server.
+This will:
+1. Build the app in the cloud using EAS Build
+2. Automatically submit to App Store Connect
+3. The build will appear in TestFlight for installation
+
+### Manual Steps (if needed)
+
+```bash
+# Build only (without auto-submit)
+eas build --platform ios --profile production
+
+# Submit an existing build to App Store Connect
+eas submit --platform ios
+```
+
+### First-Time Setup
+
+If this is a new device or the EAS project hasn't been configured:
+
+```bash
+# Login to Expo account
+eas login
+
+# Configure the project (creates/links to EAS project)
+eas build:configure
+```
 
 **Important notes**:
-- Always use `--configuration Release` for device builds. Debug builds require Metro and will show "no script url provided" error when opened without the dev server running.
-- The phone is usually locked, so the build will fail to launch the app after installing. This is expected - the deploy is complete when you see "Build Succeeded" and the app is installed. Don't wait for the launch step.
+- Builds run in the cloud and take several minutes
+- When using the releaser agent, don't block waiting for it to complete
+- After the build is submitted, it may take a few minutes to appear in TestFlight
 
 ## Code Patterns
 

@@ -10,13 +10,15 @@ Use the following agents proactively for their corresponding tasks:
 
 - **feature-architect**: BEFORE any code change, use this agent to analyze the codebase, identify refactoring opportunities, and create an implementation plan
 - **code-change-reviewer**: AFTER any code change, use this agent to review for bugs, logic errors, and issues
-- **test-runner**: When investigating issues, bugs, or unexpected behavior, use this agent to run tests and diagnose problems
+- **test-runner**: MUST be called after ANY code change to run the test suite and verify nothing is broken. Also use when investigating issues, bugs, or unexpected behavior
 - **codebase-researcher**: When you need to understand existing patterns, architecture, or implementation details
 - **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
 
 ## Project Overview
 
 A web application built with React Router (Remix).
+
+<!-- Add project-specific description here -->
 
 ## Development
 
@@ -60,6 +62,8 @@ npm run test:ui       # Run tests with Playwright UI
 - **Framework**: React Router v7 (Remix)
 - **Styling**: Tailwind CSS v4
 
+<!-- Add project-specific tech stack details here -->
+
 ## Key Files
 
 - `app/routes/` - Page routes and loaders
@@ -67,6 +71,10 @@ npm run test:ui       # Run tests with Playwright UI
 - `app/context/` - React Context providers
 - `app/lib/` - Server-side utilities
 
+<!-- Add project-specific key files here -->
+
 ## Environment Variables
 
 Create a `.env` file with required environment variables (see `.env.example` if available).
+
+<!-- Add project-specific environment variables here -->
