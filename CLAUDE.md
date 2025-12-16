@@ -17,10 +17,16 @@ agents/           # Custom subagent definitions
   codebase-researcher.md
   code-change-reviewer.md
   feature-architect.md
+settings/         # User-level Claude Code settings
+  settings.json   # Synced from ~/.claude/settings.json (plugins, MCP servers, preferences)
 mobile-apps/      # Template for React Native/Expo projects
   CLAUDE.md
+  .claude/
+    settings.json # Project MCP servers (e.g., ios-simulator)
 web-apps/         # Template for React Router/Remix projects
   CLAUDE.md
+  .claude/
+    settings.json # Project MCP servers (e.g., playwright)
 ```
 
 ## Agents
@@ -45,6 +51,20 @@ cp agents/*.md ~/.claude/agents/
 
 This must be done every time an agent is changed, before committing.
 
+## MCP Servers
+
+MCP (Model Context Protocol) servers are synced at two levels:
+
+### User-level MCP Servers
+User-level settings (including MCP servers) are stored in `~/.claude/settings.json` and synced to `settings/settings.json` in this repo.
+
+### Project-level MCP Servers
+Project templates include `.claude/settings.json` with recommended MCP servers for each project type:
+- **Mobile apps**: `ios-simulator` for visual testing on iOS simulator
+- **Web apps**: `playwright` for browser automation and testing
+
+When creating a new project from a template, copy both the `CLAUDE.md` and the `.claude/` directory.
+
 ## Projects
 
 Projects to curate CLAUDE.md files for are located in `~/Projects`:
@@ -55,13 +75,15 @@ Projects to curate CLAUDE.md files for are located in `~/Projects`:
 
 ## Creating a New Project
 
-1. Copy the appropriate template (`mobile-apps/CLAUDE.md` or `web-apps/CLAUDE.md`) to your new project
+1. Copy the appropriate template directory (`mobile-apps/` or `web-apps/`) contents to your new project:
+   - `CLAUDE.md` - Project instructions
+   - `.claude/settings.json` - MCP server configuration
 2. Fill in project-specific details (overview, key files, environment setup)
-3. The Agent Usage section is already included
+3. The Agent Usage section and MCP servers are already configured
 
 ## Commands
 
-- `/sync` - Sync agents and commands from `~/.claude/`, then update templates based on common patterns found in `~/Projects`
+- `/sync` - Sync agents, commands, and settings from `~/.claude/`, sync project MCP servers to templates, and update templates based on common patterns found in `~/Projects`
 
 ## Workflow
 

@@ -6,6 +6,7 @@ The source of truth is `~/.claude/`. Copy all files from there to this repositor
 
 1. Sync agents: Compare files in `~/.claude/agents/` with `agents/` in this repo, copy any that are newer or different
 2. Sync commands: Compare files in `~/.claude/commands/` with `.claude/commands/` in this repo, copy any that are newer or different
+3. Sync user settings: Copy `~/.claude/settings.json` to `settings/settings.json` in this repo (this includes enabled plugins, MCP servers, and other user preferences)
 
 ## Part 2: Update templates from ~/Projects
 
@@ -26,6 +27,18 @@ Scan all projects in `~/Projects` that have a CLAUDE.md file:
    - `web-apps/CLAUDE.md` - Update with common patterns from web projects
 
 4. Keep templates generic (no project-specific details) but include all common sections and patterns found across projects of that type.
+
+## Part 2.5: Sync project MCP servers to templates
+
+For each project type, check for MCP server configurations in the projects:
+
+1. Check for `.claude/settings.json` files in projects of each type (mobile and web)
+2. Extract the `mcpServers` configuration from each project
+3. Identify common MCP servers used across projects of the same type
+4. Update the template `.claude/settings.json` files:
+   - `mobile-apps/.claude/settings.json` - Include common MCP servers for mobile projects (e.g., ios-simulator)
+   - `web-apps/.claude/settings.json` - Include common MCP servers for web projects (e.g., playwright)
+5. Keep only MCP servers that are commonly used or essential for that project type
 
 ## Part 3: Sync agents to project CLAUDE.md files
 
