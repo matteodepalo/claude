@@ -41,7 +41,7 @@ React Native/Expo mobile application.
 
 ## Manual Testing (Development)
 
-**Important**: Always verify UI changes visually using the iOS simulator MCP tools before considering a task complete.
+**Important**: Always verify UI changes visually using Expo MCP tools before considering a task complete.
 
 ### Using Expo Go
 
@@ -59,18 +59,19 @@ This command:
 
 **Note**: Expo Go is only for development. For production builds, use EAS Build and TestFlight.
 
-### MCP Simulator Tools
+### Expo MCP Tools
 
-- `mcp__ios-simulator__ui_view` - Take screenshots to verify UI changes
-- `mcp__ios-simulator__ui_tap` - Tap on coordinates to test interactions
-- `mcp__ios-simulator__ui_type` - Type text into inputs
-- `mcp__ios-simulator__ui_swipe` - Scroll and swipe gestures
+This project uses `expo-mcp` for visual testing. Use the available MCP tools to:
+- Take screenshots to verify UI changes
+- Tap on coordinates to test interactions
+- Type text into inputs
+- Scroll and swipe gestures
 
 ### Testing Workflow
 
 1. Start the dev server: `npx expo start --ios --localhost`
 2. Make code changes (Metro will hot-reload automatically)
-3. Take a screenshot with `mcp__ios-simulator__ui_view` to verify the change
+3. Take a screenshot to verify the change
 4. Test interactions by tapping/typing as needed
 5. Never assume a change looks correct - always verify visually
 

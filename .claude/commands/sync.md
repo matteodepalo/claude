@@ -36,7 +36,7 @@ For each project type, check for MCP server configurations in the projects:
 2. Extract the `mcpServers` configuration from each project
 3. Identify common MCP servers used across projects of the same type
 4. Update the template `.claude/settings.json` files:
-   - `mobile-apps/.claude/settings.json` - Include common MCP servers for mobile projects (e.g., ios-simulator)
+   - `mobile-apps/.claude/settings.json` - Include common MCP servers for mobile projects (e.g., expo-mcp)
    - `web-apps/.claude/settings.json` - Include common MCP servers for web projects (e.g., playwright)
 5. Keep only MCP servers that are commonly used or essential for that project type
 
