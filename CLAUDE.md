@@ -22,7 +22,7 @@ settings/         # User-level Claude Code settings
 mobile-apps/      # Template for React Native/Expo projects
   CLAUDE.md
   .claude/
-    settings.json # Project MCP servers (e.g., ios-simulator)
+    settings.json # Project MCP servers (empty by default)
 web-apps/         # Template for React Router/Remix projects
   CLAUDE.md
   .claude/
@@ -59,8 +59,8 @@ MCP (Model Context Protocol) servers are synced at two levels:
 User-level settings (including MCP servers) are stored in `~/.claude/settings.json` and synced to `settings/settings.json` in this repo.
 
 ### Project-level MCP Servers
-Project templates include `.claude/settings.json` with recommended MCP servers for each project type:
-- **Mobile apps**: `ios-simulator` for visual testing on iOS simulator
+Project templates include `.claude/settings.json` for project-specific MCP servers:
+- **Mobile apps**: No default MCP server (configure per-project, e.g., `expo-mcp` for Expo projects)
 - **Web apps**: `playwright` for browser automation and testing
 
 When creating a new project from a template, copy both the `CLAUDE.md` and the `.claude/` directory.
