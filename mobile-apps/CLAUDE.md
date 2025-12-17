@@ -47,21 +47,29 @@ React Native/Expo mobile application.
 
 Development testing uses **Expo Go**, a pre-built app that loads your JavaScript code without requiring a full native build. This is faster than building a standalone app.
 
-```bash
-# Start dev server and open in Expo Go on simulator
-npx expo start --ios --localhost
-```
-
-This command:
-1. Starts the Metro bundler
-2. Opens Expo Go in the iOS simulator
-3. Loads your app inside Expo Go
-
 **Note**: Expo Go is only for development. For production builds, use EAS Build and TestFlight.
 
 ### Expo MCP Tools
 
-This project uses `expo-mcp` for visual testing. Use the available MCP tools to:
+This project uses `expo-mcp` for visual testing with AI assistants. The MCP server provides local capabilities like screenshots, tapping, and automation.
+
+#### Starting the Dev Server with MCP
+
+In a **separate terminal**, run:
+```bash
+EXPO_UNSTABLE_MCP_SERVER=1 npx expo start --ios --localhost
+```
+
+This enables:
+- `EXPO_UNSTABLE_MCP_SERVER=1` - Enables MCP local capabilities
+
+Then press `i` to open the app on the iOS simulator.
+
+**Important**: After starting the dev server, **restart Claude Code** to refresh the MCP connection and get access to local capabilities (screenshot, tap, etc.).
+
+#### Available MCP Capabilities
+
+Once connected, the MCP tools allow you to:
 - Take screenshots to verify UI changes
 - Tap on coordinates to test interactions
 - Type text into inputs
@@ -69,11 +77,13 @@ This project uses `expo-mcp` for visual testing. Use the available MCP tools to:
 
 ### Testing Workflow
 
-1. Start the dev server: `npx expo start --ios --localhost`
-2. Make code changes (Metro will hot-reload automatically)
-3. Take a screenshot to verify the change
-4. Test interactions by tapping/typing as needed
-5. Never assume a change looks correct - always verify visually
+1. Start the dev server with MCP in a separate terminal (see above)
+2. Open the app on simulator (press `i`)
+3. Restart Claude Code to get MCP local capabilities
+4. Make code changes (Metro will hot-reload automatically)
+5. Take a screenshot to verify the change
+6. Test interactions by tapping/typing as needed
+7. Never assume a change looks correct - always verify visually
 
 ## Deploying to TestFlight
 

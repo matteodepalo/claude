@@ -22,7 +22,7 @@ settings/         # User-level Claude Code settings
 mobile-apps/      # Template for React Native/Expo projects
   CLAUDE.md
   .claude/
-    settings.json # Project MCP servers (empty by default)
+    settings.json # Project MCP servers (configure expo-mcp per-project)
 web-apps/         # Template for React Router/Remix projects
   CLAUDE.md
   .claude/
