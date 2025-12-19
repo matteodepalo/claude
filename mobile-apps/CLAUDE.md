@@ -41,7 +41,7 @@ React Native/Expo mobile application.
 
 ## Manual Testing (Development)
 
-**Important**: Always verify UI changes visually using Expo MCP tools before considering a task complete.
+**Important**: Always verify UI changes visually using Mobile MCP tools before considering a task complete.
 
 ### Using Expo Go
 
@@ -49,27 +49,22 @@ Development testing uses **Expo Go**, a pre-built app that loads your JavaScript
 
 **Note**: Expo Go is only for development. For production builds, use EAS Build and TestFlight.
 
-### Expo MCP Tools
+### Mobile MCP Tools
 
-This project uses `expo-mcp` for visual testing with AI assistants. The MCP server provides local capabilities like screenshots, tapping, and automation.
+This project uses `mobile-mcp` for visual testing with AI assistants. The MCP server provides capabilities like screenshots, tapping, and automation.
 
-#### Starting the Dev Server with MCP
+#### Starting the Dev Server
 
 In a **separate terminal**, run:
 ```bash
-EXPO_UNSTABLE_MCP_SERVER=1 npx expo start --ios --localhost
+npx expo start --ios --localhost
 ```
-
-This enables:
-- `EXPO_UNSTABLE_MCP_SERVER=1` - Enables MCP local capabilities
 
 Then press `i` to open the app on the iOS simulator.
 
-**Important**: After starting the dev server, **restart Claude Code** to refresh the MCP connection and get access to local capabilities (screenshot, tap, etc.).
-
 #### Available MCP Capabilities
 
-Once connected, the MCP tools allow you to:
+The Mobile MCP tools allow you to:
 - Take screenshots to verify UI changes
 - Tap on coordinates to test interactions
 - Type text into inputs
@@ -77,13 +72,12 @@ Once connected, the MCP tools allow you to:
 
 ### Testing Workflow
 
-1. Start the dev server with MCP in a separate terminal (see above)
+1. Start the dev server in a separate terminal (see above)
 2. Open the app on simulator (press `i`)
-3. Restart Claude Code to get MCP local capabilities
-4. Make code changes (Metro will hot-reload automatically)
-5. Take a screenshot to verify the change
-6. Test interactions by tapping/typing as needed
-7. Never assume a change looks correct - always verify visually
+3. Make code changes (Metro will hot-reload automatically)
+4. Take a screenshot to verify the change
+5. Test interactions by tapping/typing as needed
+6. Never assume a change looks correct - always verify visually
 
 ## Deploying to TestFlight
 
