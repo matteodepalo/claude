@@ -53,7 +53,15 @@ This must be done every time an agent is changed, before committing.
 
 ## MCP Servers
 
-MCP (Model Context Protocol) servers are synced at two levels:
+MCP (Model Context Protocol) servers are configured at multiple levels:
+
+### Important: Runtime vs Shared Config
+
+**Claude Code reads MCP servers from `~/.claude.json`** (in the `projects.<path>.mcpServers` section), NOT from `.claude/settings.json`. The `.claude/settings.json` file in a project is for sharing/committing to the repo, but Claude Code stores the actual runtime config in `~/.claude.json`.
+
+When changing MCP servers for an existing project:
+1. Update `~/.claude.json` under `projects.<project-path>.mcpServers` - this is what Claude Code actually uses
+2. Update `.claude/settings.json` in the project - for version control/sharing
 
 ### User-level MCP Servers
 User-level settings (including MCP servers) are stored in `~/.claude/settings.json` and synced to `settings/settings.json` in this repo.
