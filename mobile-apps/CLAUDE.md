@@ -9,10 +9,94 @@ This file contains project-specific instructions for Claude Code and other AI co
 Use the following agents proactively for their corresponding tasks:
 
 - **feature-architect**: BEFORE any code change, use this agent to analyze the codebase, identify refactoring opportunities, and create an implementation plan
-- **code-change-reviewer**: MUST be called after ANY code change to review for bugs, logic errors, and issues
-- **test-runner**: MUST be called after ANY code change to run the test suite and verify nothing is broken. Also use when investigating issues, bugs, or unexpected behavior
 - **codebase-researcher**: When you need to understand existing patterns, architecture, or implementation details
 - **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
+
+### MANDATORY: Code Review After Every Change
+
+**The code-change-reviewer agent MUST be called after ANY code change, no matter how small.**
+
+This includes:
+- New features
+- Bug fixes
+- Refactoring
+- Single-line changes
+- Documentation updates to code files
+
+**Workflow:**
+1. Make your code changes
+2. **IMMEDIATELY** call the code-change-reviewer agent
+3. Address any issues found
+4. Then run tests
+
+### MANDATORY: Test After Every Change
+
+**The test-runner agent MUST be called after ANY code change to run the test suite.**
+
+<!-- If using Detox E2E tests: -->
+- Always rebuild the test environment first if there were structural changes: `npm run test:e2e:build`
+- Then run tests: `npm run test:e2e`
+- Also use when investigating issues, bugs, or unexpected behavior
+
+### MANDATORY: Push Changes to GitHub
+
+**After completing ANY code change, ALWAYS commit and push to GitHub.**
+
+Do NOT wait for the user to ask you to push. This should be automatic after every change:
+
+```bash
+git add -A && git commit -m "Description of changes" && git push
+```
+
+This ensures:
+- Changes are backed up immediately
+- The user can see the changes in GitHub
+- Changes are ready for deployment
+
+## E2E Testing Requirements
+
+**Every feature addition, removal, or change MUST have a corresponding E2E test.**
+
+### Rules
+
+1. **Always create/update E2E tests** when implementing features:
+   - New feature -> Add new E2E test(s) covering the feature
+   - Modified feature -> Update existing E2E test(s) to reflect changes
+   - Removed feature -> Remove corresponding E2E test(s)
+
+2. **Use Detox E2E tests as the primary testing method**:
+   - Run `npm run test:e2e` to verify features work correctly
+   - Tests are in the `e2e/` directory
+
+3. **Use mobile-mcp for manual testing**: When you need to visually verify UI changes, debug issues interactively, or test flows that are hard to automate
+
+4. **TestID convention**: Always add `testID` props to new UI elements for E2E testing
+
+### Example Workflow
+
+```
+1. Implement feature
+2. Add testID props to new UI elements
+3. Write E2E test for the feature
+4. Run `npm run test:e2e` to verify
+5. Fix any failing tests before considering the feature complete
+```
+
+### Debugging Failing E2E Tests
+
+**IMPORTANT: Before increasing timeouts to fix failing tests, ALWAYS use mobile-mcp to investigate first.**
+
+When a test fails:
+1. Use `mobile_take_screenshot` to see the actual screen state
+2. Use `mobile_list_elements_on_screen` to verify elements are in the accessibility tree
+3. Identify the real root cause (element not visible, wrong coordinates, element not in accessibility tree, etc.)
+4. Fix the actual issue rather than blindly increasing timeouts
+
+Common issues:
+- Element text not in accessibility tree -> Add a `testID` prop instead of using `by.text()`
+- Element not scrolled into view -> Add `whileElement().scroll()` before assertion
+- State not updating -> Check if component is re-rendering correctly
+- Wrong element being tapped -> Verify coordinates with `mobile_list_elements_on_screen`
 
 ## Project Overview
 
@@ -43,11 +127,25 @@ React Native/Expo mobile application.
 
 **Important**: Always verify UI changes visually using Mobile MCP tools before considering a task complete.
 
-### Using Expo Go
+### Using Development Build
 
-Development testing uses **Expo Go**, a pre-built app that loads your JavaScript code without requiring a full native build. This is faster than building a standalone app.
+This project uses a **development build** (via `expo-dev-client`) instead of Expo Go. This allows the app to include custom native code while still supporting hot reload during development.
 
-**Note**: Expo Go is only for development. For production builds, use EAS Build and TestFlight.
+```bash
+# First time (or after native code changes): Build and install on simulator
+npx expo run:ios
+
+# Subsequent runs: Just start Metro (app is already installed)
+npx expo start
+```
+
+The first command builds native code and installs the app on the simulator. After that, you only need `npx expo start` - the app connects to Metro and hot reloads JS changes just like Expo Go.
+
+**When to rebuild with `npx expo run:ios`:**
+- First time setup
+- After adding/updating native dependencies
+- After changing `app.json` native configuration
+- After running `npx expo prebuild`
 
 ### Mobile MCP Tools
 
@@ -55,12 +153,19 @@ This project uses `mobile-mcp` for visual testing with AI assistants. The MCP se
 
 #### Starting the Dev Server
 
-In a **separate terminal**, run:
+**First time (or after native code changes)**: Build and install the development build:
 ```bash
-npx expo start --ios --localhost
+npx expo run:ios
+```
+
+**Subsequent runs**: In a **separate terminal**, run:
+```bash
+npx expo start
 ```
 
 Then press `i` to open the app on the iOS simulator.
+
+**Note**: If you get "No development build installed" error, run `npx expo run:ios` first to install the app.
 
 #### Available MCP Capabilities
 
@@ -69,6 +174,7 @@ The Mobile MCP tools allow you to:
 - Tap on coordinates to test interactions
 - Type text into inputs
 - Scroll and swipe gestures
+- Find elements by testID
 
 ### Testing Workflow
 
@@ -79,9 +185,9 @@ The Mobile MCP tools allow you to:
 5. Test interactions by tapping/typing as needed
 6. Never assume a change looks correct - always verify visually
 
-## Deploying to TestFlight
+## Deploying to iPhone via TestFlight
 
-This app uses **EAS Build** and **TestFlight** for deployment.
+This app uses **EAS Build** and **TestFlight** for deployment to the iPhone.
 
 ### Build and Submit to TestFlight
 
@@ -121,6 +227,7 @@ eas build:configure
 - Builds run in the cloud and take several minutes
 - When using the releaser agent, don't block waiting for it to complete
 - After the build is submitted, it may take a few minutes to appear in TestFlight
+- **Always release after every code change** - deploy to TestFlight so the user can test the changes
 
 ## Code Patterns
 
@@ -129,10 +236,4 @@ eas build:configure
 
 ## Git Workflow
 
-After making changes, always commit and push to GitHub:
-
-```bash
-git add .
-git commit -m "Description of changes"
-git push
-```
+See "MANDATORY: Push Changes to GitHub" above. Always push after every change - don't wait to be asked.
