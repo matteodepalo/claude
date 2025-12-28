@@ -33,10 +33,11 @@ This includes:
 
 **The test-runner agent MUST be called after ANY code change to run the test suite.**
 
-<!-- If using Detox E2E tests: -->
+- Also use when investigating issues, bugs, or unexpected behavior
+<!-- If using Detox E2E tests, uncomment:
 - Always rebuild the test environment first if there were structural changes: `npm run test:e2e:build`
 - Then run tests: `npm run test:e2e`
-- Also use when investigating issues, bugs, or unexpected behavior
+-->
 
 ### MANDATORY: Push Changes to GitHub
 
@@ -52,51 +53,6 @@ This ensures:
 - Changes are backed up immediately
 - The user can see the changes in GitHub
 - Changes are ready for deployment
-
-## E2E Testing Requirements
-
-**Every feature addition, removal, or change MUST have a corresponding E2E test.**
-
-### Rules
-
-1. **Always create/update E2E tests** when implementing features:
-   - New feature -> Add new E2E test(s) covering the feature
-   - Modified feature -> Update existing E2E test(s) to reflect changes
-   - Removed feature -> Remove corresponding E2E test(s)
-
-2. **Use Detox E2E tests as the primary testing method**:
-   - Run `npm run test:e2e` to verify features work correctly
-   - Tests are in the `e2e/` directory
-
-3. **Use mobile-mcp for manual testing**: When you need to visually verify UI changes, debug issues interactively, or test flows that are hard to automate
-
-4. **TestID convention**: Always add `testID` props to new UI elements for E2E testing
-
-### Example Workflow
-
-```
-1. Implement feature
-2. Add testID props to new UI elements
-3. Write E2E test for the feature
-4. Run `npm run test:e2e` to verify
-5. Fix any failing tests before considering the feature complete
-```
-
-### Debugging Failing E2E Tests
-
-**IMPORTANT: Before increasing timeouts to fix failing tests, ALWAYS use mobile-mcp to investigate first.**
-
-When a test fails:
-1. Use `mobile_take_screenshot` to see the actual screen state
-2. Use `mobile_list_elements_on_screen` to verify elements are in the accessibility tree
-3. Identify the real root cause (element not visible, wrong coordinates, element not in accessibility tree, etc.)
-4. Fix the actual issue rather than blindly increasing timeouts
-
-Common issues:
-- Element text not in accessibility tree -> Add a `testID` prop instead of using `by.text()`
-- Element not scrolled into view -> Add `whileElement().scroll()` before assertion
-- State not updating -> Check if component is re-rendering correctly
-- Wrong element being tapped -> Verify coordinates with `mobile_list_elements_on_screen`
 
 ## Project Overview
 
