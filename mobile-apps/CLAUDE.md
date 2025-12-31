@@ -26,18 +26,21 @@ This includes:
 **Workflow:**
 1. Make your code changes
 2. **IMMEDIATELY** call the code-change-reviewer agent
-3. Address any issues found
+3. **Address ALL issues found, even minor ones** - do not skip or dismiss any issues
 4. Then run tests
+
+**IMPORTANT: Never ignore review issues.** Even if an issue seems minor, fix it. This includes:
+- Edge case handling
+- Defensive checks
+- UX improvements
+- Code clarity
+- Naming consistency
 
 ### MANDATORY: Test After Every Change
 
 **The test-runner agent MUST be called after ANY code change to run the test suite.**
 
 - Also use when investigating issues, bugs, or unexpected behavior
-<!-- If using Detox E2E tests, uncomment:
-- Always rebuild the test environment first if there were structural changes: `npm run test:e2e:build`
-- Then run tests: `npm run test:e2e`
--->
 
 ### MANDATORY: Push Changes to GitHub
 
@@ -54,9 +57,9 @@ This ensures:
 - The user can see the changes in GitHub
 - Changes are ready for deployment
 
-## E2E Testing Requirements
+## CRITICAL: E2E Testing Requirements
 
-**Every feature addition, removal, or change SHOULD have a corresponding E2E test.**
+**Every feature addition, removal, or change MUST have a corresponding E2E test.**
 
 ### Rules
 
@@ -65,17 +68,25 @@ This ensures:
    - Modified feature → Update existing E2E test(s) to reflect changes
    - Removed feature → Remove corresponding E2E test(s)
 
-2. **Use mobile-mcp for manual testing**: When you need to visually verify UI changes, debug issues interactively, or test flows that are hard to automate
+2. **Use Maestro E2E tests as the primary testing method**:
+   - Run `npm run test:e2e` to verify features work correctly
+   - Tests are YAML flows in the `.maestro/flows/` directory
 
-3. **TestID convention**: Always add `testID` props to new UI elements for E2E testing
+3. **Use mobile-mcp for manual testing**: When you need to visually verify UI changes, debug issues interactively, or test flows that are hard to automate
 
-<!-- Uncomment and customize for your E2E framework (Detox, Maestro, etc.):
+4. **Test file location**: `.maestro/flows/` (organized by feature)
 
-### Running E2E Tests
+5. **TestID convention**: Always add `testID` props to new UI elements for E2E testing
 
-- Run `npm run test:e2e` to verify features work correctly
-- Tests are in the `e2e/` directory
-- Rebuild the test environment after structural changes: `npm run test:e2e:build`
+### Example Workflow
+
+```
+1. Implement feature
+2. Add testID props to new UI elements
+3. Write E2E test for the feature
+4. Run `npm run test:e2e` to verify
+5. Fix any failing tests before considering the feature complete
+```
 
 ### Debugging Failing E2E Tests
 
@@ -84,15 +95,69 @@ This ensures:
 When a test fails:
 1. Use `mobile_take_screenshot` to see the actual screen state
 2. Use `mobile_list_elements_on_screen` to verify elements are in the accessibility tree
-3. Identify the real root cause (element not visible, wrong coordinates, etc.)
+3. Identify the real root cause (element not visible, wrong testID, element not scrolled into view, etc.)
 4. Fix the actual issue rather than blindly increasing timeouts
 
 Common issues:
-- Element text not in accessibility tree → Add a `testID` prop instead of using `by.text()`
-- Element not scrolled into view → Add scroll before assertion
+- Element not found → Add a `testID` prop and use `id:` selector
+- Element not scrolled into view → Use `scrollUntilVisible` command
 - State not updating → Check if component is re-rendering correctly
-- Wrong element being tapped → Verify coordinates with `mobile_list_elements_on_screen`
--->
+- Keyboard blocking element → Add `hideKeyboard` after `inputText`
+- Plain View not visible → Plain `View` components without `accessible={true}` may not appear in the accessibility tree. Add `accessible={true}` to Views that need to be detected
+
+### Keyboard Dismissal in Tests
+
+When typing text in input fields, use `hideKeyboard` after typing to dismiss the keyboard:
+
+```yaml
+# CORRECT - dismisses keyboard after typing
+- tapOn:
+    id: "weight-input"
+- inputText: "100"
+- hideKeyboard
+- tapOn:
+    id: "reps-input"
+- inputText: "5"
+- hideKeyboard
+```
+
+### Native Alert Handling
+
+Maestro handles native iOS alerts (`Alert.alert()`) simply by tapping the button text:
+
+```yaml
+# Tap an alert button by its text
+- tapOn: "Skip"
+- tapOn: "Complete Anyway"
+- tapOn: "Cancel"
+```
+
+No special configuration needed - Maestro automatically handles native alerts.
+
+### Adding New Tests
+
+Test files are YAML flows in `.maestro/flows/` directory. Create a new file following this pattern:
+
+```yaml
+# Test: description of what the test validates
+
+appId: com.example.app  # Update with your app ID
+
+---
+
+- launchApp:
+    clearState: true
+
+- runFlow:
+    file: ../../subflows/login.yaml
+
+# Test actions here
+- tapOn:
+    id: "some-testid"
+
+- assertVisible:
+    id: "expected-element"
+```
 
 ## Project Overview
 
@@ -223,7 +288,6 @@ eas build:configure
 - Builds run in the cloud and take several minutes
 - When using the releaser agent, don't block waiting for it to complete
 - After the build is submitted, it may take a few minutes to appear in TestFlight
-- **Always release after every code change** - deploy to TestFlight so the user can test the changes
 
 ## Code Patterns
 

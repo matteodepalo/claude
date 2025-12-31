@@ -21,12 +21,10 @@ settings/         # User-level Claude Code settings
   settings.json   # Synced from ~/.claude/settings.json (plugins, MCP servers, preferences)
 mobile-apps/      # Template for React Native/Expo projects
   CLAUDE.md
-  .claude/
-    settings.json # Project MCP servers (mobile-mcp for iOS projects)
+  .mcp.json       # Project MCP servers (mobile-mcp for iOS projects)
 web-apps/         # Template for React Router/Remix projects
   CLAUDE.md
-  .claude/
-    settings.json # Project MCP servers (e.g., playwright)
+  .mcp.json       # Project MCP servers (e.g., playwright)
 ```
 
 ## Agents
@@ -55,23 +53,15 @@ This must be done every time an agent is changed, before committing.
 
 MCP (Model Context Protocol) servers are configured at multiple levels:
 
-### Important: Runtime vs Shared Config
-
-**Claude Code reads MCP servers from `~/.claude.json`** (in the `projects.<path>.mcpServers` section), NOT from `.claude/settings.json`. The `.claude/settings.json` file in a project is for sharing/committing to the repo, but Claude Code stores the actual runtime config in `~/.claude.json`.
-
-When changing MCP servers for an existing project:
-1. Update `~/.claude.json` under `projects.<project-path>.mcpServers` - this is what Claude Code actually uses
-2. Update `.claude/settings.json` in the project - for version control/sharing
-
 ### User-level MCP Servers
 User-level settings (including MCP servers) are stored in `~/.claude/settings.json` and synced to `settings/settings.json` in this repo.
 
 ### Project-level MCP Servers
-Project templates include `.claude/settings.json` for project-specific MCP servers:
+Project templates use `.mcp.json` at the project root for project-specific MCP servers:
 - **Mobile apps**: `mobile-mcp` for iOS simulator automation and testing
 - **Web apps**: `playwright` for browser automation and testing
 
-When creating a new project from a template, copy both the `CLAUDE.md` and the `.claude/` directory.
+The `.mcp.json` file is designed to be committed to version control and shared with the team. Claude Code reads it directly from the project root.
 
 ## Projects
 
@@ -85,7 +75,7 @@ Projects to curate CLAUDE.md files for are located in `~/Projects`:
 
 1. Copy the appropriate template directory (`mobile-apps/` or `web-apps/`) contents to your new project:
    - `CLAUDE.md` - Project instructions
-   - `.claude/settings.json` - MCP server configuration
+   - `.mcp.json` - MCP server configuration
 2. Fill in project-specific details (overview, key files, environment setup)
 3. The Agent Usage section and MCP servers are already configured
 
