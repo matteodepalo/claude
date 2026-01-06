@@ -16,148 +16,107 @@ Use the following agents proactively for their corresponding tasks:
 
 **The code-change-reviewer agent MUST be called after ANY code change, no matter how small.**
 
-This includes:
-- New features
-- Bug fixes
-- Refactoring
-- Single-line changes
-- Documentation updates to code files
-
 **Workflow:**
 1. Make your code changes
 2. **IMMEDIATELY** call the code-change-reviewer agent
 3. **Address ALL issues found, even minor ones** - do not skip or dismiss any issues
 4. Then run tests
 
-**IMPORTANT: Never ignore review issues.** Even if an issue seems minor, fix it. This includes:
-- Edge case handling
-- Defensive checks
-- UX improvements
-- Code clarity
-- Naming consistency
-
 ### MANDATORY: Test After Every Change
 
 **The test-runner agent MUST be called after ANY code change to run the test suite.**
 
-- Also use when investigating issues, bugs, or unexpected behavior
+**Preferred approach (with Metro hot reload):**
+1. Keep Metro running: `npm run start:e2e` (in a separate terminal)
+2. Make code changes (Metro hot reloads automatically)
+3. Run tests: `npm run test:e2e` - no rebuild needed!
+
+**Running specific tests:** `npm run test:e2e:single .maestro/flows/<path-to-test>.yaml`
 
 ### MANDATORY: Push Changes to GitHub
 
 **After completing ANY code change, ALWAYS commit and push to GitHub.**
 
-Do NOT wait for the user to ask you to push. This should be automatic after every change:
-
 ```bash
 git add -A && git commit -m "Description of changes" && git push
 ```
-
-This ensures:
-- Changes are backed up immediately
-- The user can see the changes in GitHub
-- Changes are ready for deployment
 
 ## CRITICAL: E2E Testing Requirements
 
 **Every feature addition, removal, or change MUST have a corresponding E2E test.**
 
-### Rules
-
-1. **Always create/update E2E tests** when implementing features:
-   - New feature → Add new E2E test(s) covering the feature
-   - Modified feature → Update existing E2E test(s) to reflect changes
-   - Removed feature → Remove corresponding E2E test(s)
-
-2. **Use Maestro E2E tests as the primary testing method**:
-   - Run `npm run test:e2e` to verify features work correctly
-   - Tests are YAML flows in the `.maestro/flows/` directory
-
-3. **Use mobile-mcp for manual testing**: When you need to visually verify UI changes, debug issues interactively, or test flows that are hard to automate
-
-4. **Test file location**: `.maestro/flows/` (organized by feature)
-
-5. **TestID convention**: Always add `testID` props to new UI elements for E2E testing
-
-### Example Workflow
-
-```
-1. Implement feature
-2. Add testID props to new UI elements
-3. Write E2E test for the feature
-4. Run `npm run test:e2e` to verify
-5. Fix any failing tests before considering the feature complete
-```
+1. **Always create/update E2E tests** when implementing features
+2. **Use Maestro E2E tests** (`npm run test:e2e`) - tests are in `.maestro/flows/`
+3. **Use mobile-mcp for manual testing** when you need visual verification
+4. **TestID convention**: Always add `testID` props to new UI elements
 
 ### Debugging Failing E2E Tests
 
-**IMPORTANT: Before increasing timeouts to fix failing tests, ALWAYS use mobile-mcp to investigate first.**
+**IMPORTANT: Before increasing timeouts, ALWAYS use mobile-mcp to investigate first.**
 
-When a test fails:
-1. Use `mobile_take_screenshot` to see the actual screen state
-2. Use `mobile_list_elements_on_screen` to verify elements are in the accessibility tree
-3. Identify the real root cause (element not visible, wrong testID, element not scrolled into view, etc.)
-4. Fix the actual issue rather than blindly increasing timeouts
+1. Use `mobile_take_screenshot` to see actual screen state
+2. Use `mobile_list_elements_on_screen` to verify elements in accessibility tree
+3. Fix the actual issue rather than blindly increasing timeouts
 
 Common issues:
-- Element not found → Add a `testID` prop and use `id:` selector
-- Element not scrolled into view → Use `scrollUntilVisible` command
-- State not updating → Check if component is re-rendering correctly
+- Element not found → Add `testID` prop
+- Element not scrolled into view → Use `scrollUntilVisible`
 - Keyboard blocking element → Add `hideKeyboard` after `inputText`
-- Plain View not visible → Plain `View` components without `accessible={true}` may not appear in the accessibility tree. Add `accessible={true}` to Views that need to be detected
+- Plain View not visible → Add `accessible={true}` to Views
 
-### Keyboard Dismissal in Tests
+### Maestro Patterns
 
-When typing text in input fields, use `hideKeyboard` after typing to dismiss the keyboard:
+**Keyboard/Focus**: `hideKeyboard` hides keyboard but does NOT blur TextInput. For persistence tests, add explicit blur taps between inputs:
 
 ```yaml
-# CORRECT - dismisses keyboard after typing
 - tapOn:
-    id: "weight-input"
+    id: "input-field-1"
 - inputText: "100"
 - hideKeyboard
+- waitForAnimationToEnd:
+    timeout: 500
 - tapOn:
-    id: "reps-input"
-- inputText: "5"
+    id: "some-label"  # Blur tap
+- waitForAnimationToEnd:
+    timeout: 500
+- tapOn:
+    id: "input-field-2"
+- inputText: "8"
 - hideKeyboard
 ```
 
-### Native Alert Handling
+**Scrolling**: Swipe direction = FINGER movement:
+- `swipe: direction: DOWN` = content scrolls UP
+- `swipe: direction: UP` = content scrolls DOWN
 
-Maestro handles native iOS alerts (`Alert.alert()`) simply by tapping the button text:
-
+**Always use `centerElement: true`** when scrolling to elements you'll interact with:
 ```yaml
-# Tap an alert button by its text
-- tapOn: "Skip"
-- tapOn: "Complete Anyway"
-- tapOn: "Cancel"
+- scrollUntilVisible:
+    element:
+      id: "target"
+    direction: DOWN
+    centerElement: true
 ```
 
-No special configuration needed - Maestro automatically handles native alerts.
-
-### Adding New Tests
-
-Test files are YAML flows in `.maestro/flows/` directory. Create a new file following this pattern:
-
+**State assertions**: Use `extendedWaitUntil` instead of `assertVisible` for state changes:
 ```yaml
-# Test: description of what the test validates
-
-appId: com.example.app  # Update with your app ID
-
----
-
-- launchApp:
-    clearState: true
-
-- runFlow:
-    file: ../../subflows/login.yaml
-
-# Test actions here
-- tapOn:
-    id: "some-testid"
-
-- assertVisible:
-    id: "expected-element"
+- extendedWaitUntil:
+    visible:
+      id: "element-after-state-change"
+    timeout: 5000
 ```
+
+**Native alerts**: Just tap the button text: `- tapOn: "Skip"`
+
+### Common Test Failures
+
+| Symptom | Solution |
+|---------|----------|
+| Text goes to wrong field | Add blur tap between inputs |
+| Complete button disabled | Use blur taps to capture all inputs |
+| Element not found after scroll | Use `centerElement: true` |
+| State assertion fails | Use `extendedWaitUntil` |
+| Data not persisted after reload | Add waits before `launchApp` |
 
 ## Project Overview
 
@@ -175,125 +134,68 @@ React Native/Expo mobile application.
 
 <!-- Add project-specific important files here -->
 
+## Detailed Documentation
+
+For more details on specific areas, read these README files:
+
+| Area | README | When to read |
+|------|--------|--------------|
+| E2E Tests | `.maestro/README.md` | Detailed test patterns, persistence tests |
+
+<!-- Add project-specific READMEs here -->
+
 ## Environment Setup
-
-### Environment Files
-
-- `.env.local` - Used during development
-- `.env.production` - Production credentials (gitignored)
 
 <!-- Add project-specific environment setup here -->
 
-## Manual Testing (Development)
-
-**Important**: Always verify UI changes visually using Mobile MCP tools before considering a task complete.
-
-### Using Development Build
-
-This project uses a **development build** (via `expo-dev-client`) instead of Expo Go. This allows the app to include custom native code while still supporting hot reload during development.
+## Key Commands
 
 ```bash
-# First time (or after native code changes): Build and install on simulator
-npx expo run:ios
-
-# Subsequent runs: Just start Metro (app is already installed)
+# Start app for development
 npx expo start
+
+# Start app for E2E testing
+npm run start:e2e
+
+# Run E2E tests
+npm run test:e2e
+
+# Build and install dev client (first time or native changes)
+npm run ios:e2e
+
+# Run specific test
+npm run test:e2e:single .maestro/flows/<path>.yaml
 ```
 
-The first command builds native code and installs the app on the simulator. After that, you only need `npx expo start` - the app connects to Metro and hot reloads JS changes just like Expo Go.
+## E2E Test Scripts
 
-**When to rebuild with `npx expo run:ios`:**
-- First time setup
-- After adding/updating native dependencies
-- After changing `app.json` native configuration
-- After running `npx expo prebuild`
+| Script | Description |
+|--------|-------------|
+| `npm run test:e2e` | Run tests (requires Metro) |
+| `npm run test:e2e:single <path>` | Run specific test |
+| `npm run test:e2e:full` | Start services + run tests |
+| `npm run test:e2e:full:build` | Full build + tests |
 
-### Mobile MCP Tools
+## TestID Patterns
 
-This project uses `mobile-mcp` for visual testing with AI assistants. The MCP server provides capabilities like screenshots, tapping, and automation.
+<!-- Add project-specific testID patterns here -->
+<!-- Example:
+- `button-{action}` - Action buttons
+- `input-{field}` - Input fields
+- `card-{index}` - List item cards
+-->
 
-#### Starting the Dev Server
-
-**First time (or after native code changes)**: Build and install the development build:
-```bash
-npx expo run:ios
-```
-
-**Subsequent runs**: In a **separate terminal**, run:
-```bash
-npx expo start
-```
-
-Then press `i` to open the app on the iOS simulator.
-
-**Note**: If you get "No development build installed" error, run `npx expo run:ios` first to install the app.
-
-#### Available MCP Capabilities
-
-The Mobile MCP tools allow you to:
-- Take screenshots to verify UI changes
-- Tap on coordinates to test interactions
-- Type text into inputs
-- Scroll and swipe gestures
-- Find elements by testID
-
-### Testing Workflow
-
-1. Start the dev server in a separate terminal (see above)
-2. Open the app on simulator (press `i`)
-3. Make code changes (Metro will hot-reload automatically)
-4. Take a screenshot to verify the change
-5. Test interactions by tapping/typing as needed
-6. Never assume a change looks correct - always verify visually
-
-## Deploying to iPhone via TestFlight
-
-This app uses **EAS Build** and **TestFlight** for deployment to the iPhone.
-
-### Build and Submit to TestFlight
+## Deploying to iPhone
 
 ```bash
-# Build for production and submit to App Store Connect
 eas build --platform ios --profile production --auto-submit
 ```
 
-This will:
-1. Build the app in the cloud using EAS Build
-2. Automatically submit to App Store Connect
-3. The build will appear in TestFlight for installation
-
-### Manual Steps (if needed)
-
-```bash
-# Build only (without auto-submit)
-eas build --platform ios --profile production
-
-# Submit an existing build to App Store Connect
-eas submit --platform ios
-```
-
-### First-Time Setup
-
-If this is a new device or the EAS project hasn't been configured:
-
-```bash
-# Login to Expo account
-eas login
-
-# Configure the project (creates/links to EAS project)
-eas build:configure
-```
-
-**Important notes**:
-- Builds run in the cloud and take several minutes
-- When using the releaser agent, don't block waiting for it to complete
-- After the build is submitted, it may take a few minutes to appear in TestFlight
-
 ## Code Patterns
 
-- **Fix all TypeScript errors properly** - no `any` types, no ignoring errors. Run `npx tsc --noEmit` before committing
+- **Fix all TypeScript errors properly** - no `any` types. Run `npx tsc --noEmit` before committing
 - Use strict TypeScript types, avoid string literals where union types exist
 
-## Git Workflow
+## Troubleshooting
 
-See "MANDATORY: Push Changes to GitHub" above. Always push after every change - don't wait to be asked.
+<!-- Add project-specific troubleshooting here -->
