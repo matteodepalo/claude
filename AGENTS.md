@@ -23,7 +23,6 @@ skills/           # Custom skills (auto-triggered based on description)
   prd-to-json/SKILL.md   # Convert PRD to JSON format
 scripts/          # Automation scripts
   ralph.sh               # Autonomous PRD implementation loop
-  ralph-prompt.md        # Prompt used by ralph.sh
 settings/         # User-level Claude Code settings
   settings.json   # Synced from ~/.claude/settings.json (plugins, MCP servers, preferences)
 mobile-apps/      # Template for React Native/Expo projects
@@ -64,7 +63,7 @@ Ralph is a bash script that runs Claude Code in a loop to implement PRD stories 
 **Usage:**
 ```bash
 # Copy to your project
-cp scripts/ralph.sh scripts/ralph-prompt.md /path/to/your/project/
+cp scripts/ralph.sh /path/to/your/project/
 
 # Run with default 10 iterations
 ./ralph.sh
