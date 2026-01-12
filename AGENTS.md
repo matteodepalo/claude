@@ -18,7 +18,7 @@ agents/           # Custom subagent definitions
   codebase-researcher.md
   code-change-reviewer.md
   feature-architect.md
-skills/           # Custom skills (slash commands)
+skills/           # Custom skills (auto-triggered based on description)
   prd/SKILL.md           # PRD generator
   ralph/SKILL.md         # Autonomous implementation loop
   prd-to-json/SKILL.md   # Convert PRD to JSON format
@@ -52,13 +52,13 @@ Agents are generic and read project-specific details from each project's AGENTS.
 | ralph | Autonomous loop that implements PRD stories one at a time |
 | prd-to-json | Convert markdown PRD to JSON format for ralph |
 
-Skills are invoked with `/skill-name` (e.g., `/prd`, `/ralph`).
+Skills are auto-triggered based on their description matching your request. Claude loads skill descriptions at startup and activates the relevant skill when needed.
 
 ### Ralph Workflow
 
-1. `/prd` - Generate a PRD for your feature
-2. `/prd-to-json` - Convert to `prd.json`
-3. `/ralph` - Run autonomous implementation loop
+1. Ask Claude to "create a PRD" or "generate requirements" → triggers `prd` skill
+2. Ask Claude to "convert the PRD to JSON" → triggers `prd-to-json` skill
+3. Ask Claude to "implement the PRD" or "run ralph" → triggers `ralph` skill
 
 ## Syncing Agents and Skills
 
@@ -107,9 +107,6 @@ Projects to curate AGENTS.md files for are located in `~/Projects`:
 ## Commands
 
 - `/sync` - Sync agents, skills, commands, and settings from `~/.claude/`, sync project MCP servers to templates, and update templates based on common patterns found in `~/Projects`
-- `/prd` - Generate a PRD for a new feature
-- `/prd-to-json` - Convert markdown PRD to JSON for ralph
-- `/ralph` - Run autonomous implementation loop on prd.json
 
 ## Workflow
 
