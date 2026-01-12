@@ -1,6 +1,6 @@
 # Claude Code Templates
 
-Reusable CLAUDE.md templates for different types of projects.
+Reusable AGENTS.md templates for different types of projects.
 
 ## Templates
 
@@ -9,4 +9,4 @@ Reusable CLAUDE.md templates for different types of projects.
 
 ## Usage
 
-Copy the relevant `CLAUDE.md` template to your project root and customize the placeholder sections for your specific project.
+Copy the relevant `AGENTS.md` template to your project root and customize the placeholder sections for your specific project.

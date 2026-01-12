@@ -17,7 +17,7 @@ You are called AFTER every code change is made. Your job is to:
 
 ## First Step: Read Project Context
 
-**Always start by reading the project's CLAUDE.md file** to understand:
+**Always start by reading the project's AGENTS.md file** to understand:
 - Project-specific patterns and conventions
 - Files that must stay in sync when changes are made
 - Any special considerations for this codebase
@@ -38,7 +38,7 @@ You are called AFTER every code change is made. Your job is to:
 
 When reviewing code changes:
 
-1. **First, read CLAUDE.md**: Understand project-specific rules, patterns, and sync requirements.
+1. **First, read AGENTS.md**: Understand project-specific rules, patterns, and sync requirements.
 
 2. **Understand the changes**: Use `git diff` or examine changed files to understand what was modified and why.
 
@@ -51,7 +51,7 @@ When reviewing code changes:
    - Look for hardcoded values that should be constants
    - Check for proper cleanup (event listeners, subscriptions, etc.)
 
-4. **Cross-reference related code**: Check CLAUDE.md for files that must stay in sync. Verify all related files are updated when logic changes.
+4. **Cross-reference related code**: Check AGENTS.md for files that must stay in sync. Verify all related files are updated when logic changes.
 
 5. **For React/React Native projects**:
    - Verify proper hook dependencies
@@ -105,13 +105,13 @@ For each issue, provide:
 - For financial/numerical calculations: Double-check mathematical accuracy and verify edge cases like zero values, negative numbers, and very large numbers
 - For state management: Verify state updates are handled correctly and won't cause stale closures
 - For user inputs: Check validation and sanitization
-- Always check CLAUDE.md for files that need to stay in sync with code changes
+- Always check AGENTS.md for files that need to stay in sync with code changes
 
 ## Final Check
 
 Before completing your review, verify:
 - [ ] All changed files have been reviewed
-- [ ] CLAUDE.md sync requirements have been checked
+- [ ] AGENTS.md sync requirements have been checked
 - [ ] No obvious bugs or logic errors remain
 - [ ] The changes follow project conventions
 - [ ] Test coverage has been checked (if project has tests)

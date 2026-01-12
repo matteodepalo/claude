@@ -1,6 +1,6 @@
 # Claude Code Configuration Repository
 
-This repository contains personal Claude Code configuration, including custom agents and CLAUDE.md templates.
+This repository contains personal Claude Code configuration, including custom agents and AGENTS.md templates.
 
 ## Purpose
 
@@ -20,10 +20,10 @@ agents/           # Custom subagent definitions
 settings/         # User-level Claude Code settings
   settings.json   # Synced from ~/.claude/settings.json (plugins, MCP servers, preferences)
 mobile-apps/      # Template for React Native/Expo projects
-  CLAUDE.md
+  AGENTS.md
   .mcp.json       # Project MCP servers (mobile-mcp for iOS projects)
 web-apps/         # Template for React Router/Remix projects
-  CLAUDE.md
+  AGENTS.md
   .mcp.json       # Project MCP servers (e.g., playwright)
 ```
 
@@ -37,7 +37,7 @@ web-apps/         # Template for React Router/Remix projects
 | codebase-researcher | opus | Research codebase patterns, architecture, and implementation details |
 | releaser | sonnet | Handle deployments and releases |
 
-Agents are generic and read project-specific details from each project's CLAUDE.md file.
+Agents are generic and read project-specific details from each project's AGENTS.md file.
 
 ## Syncing Agents
 
@@ -65,7 +65,7 @@ The `.mcp.json` file is designed to be committed to version control and shared w
 
 ## Projects
 
-Projects to curate CLAUDE.md files for are located in `~/Projects`:
+Projects to curate AGENTS.md files for are located in `~/Projects`:
 
 - `~/Projects/retirement-planner` - React Native retirement planning app
 - `~/Projects/nippard-tracker` - React Native workout tracker with Supabase
@@ -74,7 +74,7 @@ Projects to curate CLAUDE.md files for are located in `~/Projects`:
 ## Creating a New Project
 
 1. Copy the appropriate template directory (`mobile-apps/` or `web-apps/`) contents to your new project:
-   - `CLAUDE.md` - Project instructions
+   - `AGENTS.md` - Project instructions
    - `.mcp.json` - MCP server configuration
 2. Fill in project-specific details (overview, key files, environment setup)
 3. The Agent Usage section and MCP servers are already configured

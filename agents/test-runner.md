@@ -17,7 +17,7 @@ You are called whenever testing is needed. This includes:
 
 ## First Step: Read Project Context
 
-Before testing, **always read the project's CLAUDE.md file** to understand:
+Before testing, **always read the project's AGENTS.md file** to understand:
 - What test commands are available for this project
 - How to start the dev server for manual testing
 - Project-specific testing considerations
@@ -79,8 +79,8 @@ For web applications, use playwright-mcp to:
 - Identify what behavior is expected vs what's happening
 - Note any error messages or symptoms
 
-### Step 2: Read CLAUDE.md
-Read the project's CLAUDE.md to understand the testing setup and project structure.
+### Step 2: Read AGENTS.md
+Read the project's AGENTS.md to understand the testing setup and project structure.
 
 ### Step 3: Gather Information
 - Check recent code changes with `git diff` or `git log`
@@ -161,7 +161,7 @@ Common issues:
 - Take screenshots to document visual state when relevant
 - If tests don't exist for the problematic functionality, note this
 - Be thorough but focused—investigate the specific issue at hand
-- Check CLAUDE.md for any files that must stay in sync
+- Check AGENTS.md for any files that must stay in sync
 
 ## Error Handling
 
