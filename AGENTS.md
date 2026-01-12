@@ -20,8 +20,10 @@ agents/           # Custom subagent definitions
   feature-architect.md
 skills/           # Custom skills (auto-triggered based on description)
   prd/SKILL.md           # PRD generator
-  ralph/SKILL.md         # Autonomous implementation loop
   prd-to-json/SKILL.md   # Convert PRD to JSON format
+scripts/          # Automation scripts
+  ralph.sh               # Autonomous PRD implementation loop
+  ralph-prompt.md        # Prompt used by ralph.sh
 settings/         # User-level Claude Code settings
   settings.json   # Synced from ~/.claude/settings.json (plugins, MCP servers, preferences)
 mobile-apps/      # Template for React Native/Expo projects
@@ -49,16 +51,46 @@ Agents are generic and read project-specific details from each project's AGENTS.
 | Skill | Purpose |
 |-------|---------|
 | prd | Generate detailed PRDs with user stories and acceptance criteria |
-| ralph | Autonomous loop that implements PRD stories one at a time |
 | prd-to-json | Convert markdown PRD to JSON format for ralph |
 
 Skills are auto-triggered based on their description matching your request. Claude loads skill descriptions at startup and activates the relevant skill when needed.
+
+## Scripts
+
+### Ralph - Autonomous PRD Implementation
+
+Ralph is a bash script that runs Claude Code in a loop to implement PRD stories autonomously.
+
+**Usage:**
+```bash
+# Copy to your project
+cp scripts/ralph.sh scripts/ralph-prompt.md /path/to/your/project/
+
+# Run with default 10 iterations
+./ralph.sh
+
+# Run with custom iteration count
+./ralph.sh 20
+```
+
+**Requirements:**
+- `claude` CLI installed
+- `jq` installed (`brew install jq`)
+- `prd.json` in project root
 
 ### Ralph Workflow
 
 1. Ask Claude to "create a PRD" or "generate requirements" → triggers `prd` skill
 2. Ask Claude to "convert the PRD to JSON" → triggers `prd-to-json` skill
-3. Ask Claude to "implement the PRD" or "run ralph" → triggers `ralph` skill
+3. Run `./ralph.sh` to start autonomous implementation loop
+
+**What ralph.sh does:**
+- Reads `prd.json` and checks out the feature branch
+- Picks the highest priority incomplete story
+- Runs Claude Code with the ralph prompt
+- Tracks progress in `progress.txt`
+- Archives previous runs when switching branches
+- Exits when all stories pass or max iterations reached
 
 ## Syncing Agents and Skills
 
