@@ -6,7 +6,8 @@ The source of truth is `~/.claude/`. Copy all files from there to this repositor
 
 1. Sync agents: Compare files in `~/.claude/agents/` with `agents/` in this repo, copy any that are newer or different
 2. Sync commands: Compare files in `~/.claude/commands/` with `.claude/commands/` in this repo, copy any that are newer or different
-3. Sync user settings: Copy `~/.claude/settings.json` to `settings/settings.json` in this repo (this includes enabled plugins, MCP servers, and other user preferences)
+3. Sync skills: Compare directories in `~/.claude/skills/` with `skills/` in this repo, copy any that are newer or different (each skill is a directory with a SKILL.md file)
+4. Sync user settings: Copy `~/.claude/settings.json` to `settings/settings.json` in this repo (this includes enabled plugins, MCP servers, and other user preferences)
 
 ## Part 2: Update templates from ~/Projects
 

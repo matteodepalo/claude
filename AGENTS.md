@@ -1,11 +1,12 @@
 # Claude Code Configuration Repository
 
-This repository contains personal Claude Code configuration, including custom agents and AGENTS.md templates.
+This repository contains personal Claude Code configuration, including custom agents, skills, and AGENTS.md templates.
 
 ## Purpose
 
 - Version control Claude Code customizations
 - Sync agent definitions to `~/.claude/agents/`
+- Sync skill definitions to `~/.claude/skills/`
 - Provide reusable templates for new projects
 
 ## Structure
@@ -17,6 +18,10 @@ agents/           # Custom subagent definitions
   codebase-researcher.md
   code-change-reviewer.md
   feature-architect.md
+skills/           # Custom skills (slash commands)
+  prd/SKILL.md           # PRD generator
+  ralph/SKILL.md         # Autonomous implementation loop
+  prd-to-json/SKILL.md   # Convert PRD to JSON format
 settings/         # User-level Claude Code settings
   settings.json   # Synced from ~/.claude/settings.json (plugins, MCP servers, preferences)
 mobile-apps/      # Template for React Native/Expo projects
@@ -39,15 +44,35 @@ web-apps/         # Template for React Router/Remix projects
 
 Agents are generic and read project-specific details from each project's AGENTS.md file.
 
-## Syncing Agents
+## Skills
 
-**Important**: Whenever you modify any agent file in `agents/`, you MUST also copy it to `~/.claude/agents/` so Claude Code uses the updated version:
+| Skill | Purpose |
+|-------|---------|
+| prd | Generate detailed PRDs with user stories and acceptance criteria |
+| ralph | Autonomous loop that implements PRD stories one at a time |
+| prd-to-json | Convert markdown PRD to JSON format for ralph |
+
+Skills are invoked with `/skill-name` (e.g., `/prd`, `/ralph`).
+
+### Ralph Workflow
+
+1. `/prd` - Generate a PRD for your feature
+2. `/prd-to-json` - Convert to `prd.json`
+3. `/ralph` - Run autonomous implementation loop
+
+## Syncing Agents and Skills
+
+**Important**: Whenever you modify agents or skills, you MUST also copy them to `~/.claude/` so Claude Code uses the updated versions:
 
 ```bash
+# Sync agents
 cp agents/*.md ~/.claude/agents/
+
+# Sync skills
+cp -r skills/* ~/.claude/skills/
 ```
 
-This must be done every time an agent is changed, before committing.
+This must be done every time an agent or skill is changed, before committing.
 
 ## MCP Servers
 
@@ -81,7 +106,10 @@ Projects to curate AGENTS.md files for are located in `~/Projects`:
 
 ## Commands
 
-- `/sync` - Sync agents, commands, and settings from `~/.claude/`, sync project MCP servers to templates, and update templates based on common patterns found in `~/Projects`
+- `/sync` - Sync agents, skills, commands, and settings from `~/.claude/`, sync project MCP servers to templates, and update templates based on common patterns found in `~/Projects`
+- `/prd` - Generate a PRD for a new feature
+- `/prd-to-json` - Convert markdown PRD to JSON for ralph
+- `/ralph` - Run autonomous implementation loop on prd.json
 
 ## Workflow
 
