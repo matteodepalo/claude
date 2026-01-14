@@ -12,6 +12,7 @@ This repository contains personal Claude Code configuration, including custom ag
 ## Structure
 
 ```
+CLAUDE.md         # Global instructions (synced to ~/.claude/CLAUDE.md)
 agents/           # Custom subagent definitions
   test-runner.md
   releaser.md
@@ -91,11 +92,14 @@ cp scripts/ralph.sh /path/to/your/project/
 - Archives previous runs when switching branches
 - Exits when all stories pass or max iterations reached
 
-## Syncing Agents and Skills
+## Syncing Configuration
 
-**Important**: Whenever you modify agents or skills, you MUST also copy them to `~/.claude/` so Claude Code uses the updated versions:
+**Important**: Whenever you modify agents, skills, or global instructions, you MUST also copy them to `~/.claude/` so Claude Code uses the updated versions:
 
 ```bash
+# Sync global instructions
+cp CLAUDE.md ~/.claude/CLAUDE.md
+
 # Sync agents
 cp agents/*.md ~/.claude/agents/
 
@@ -103,7 +107,7 @@ cp agents/*.md ~/.claude/agents/
 cp -r skills/* ~/.claude/skills/
 ```
 
-This must be done every time an agent or skill is changed, before committing.
+This must be done every time configuration is changed, before committing.
 
 ## MCP Servers
 

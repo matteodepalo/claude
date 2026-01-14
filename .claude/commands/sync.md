@@ -8,6 +8,7 @@ The source of truth is `~/.claude/`. Copy all files from there to this repositor
 2. Sync commands: Compare files in `~/.claude/commands/` with `.claude/commands/` in this repo, copy any that are newer or different
 3. Sync skills: Compare directories in `~/.claude/skills/` with `skills/` in this repo, copy any that are newer or different (each skill is a directory with a SKILL.md file)
 4. Sync user settings: Copy `~/.claude/settings.json` to `settings/settings.json` in this repo (this includes enabled plugins, MCP servers, and other user preferences)
+5. Sync global instructions: If `~/.claude/CLAUDE.md` exists, copy it to `CLAUDE.md` in this repo root. If it doesn't exist but `CLAUDE.md` exists in the repo, copy it TO `~/.claude/CLAUDE.md`
 
 ## Part 2: Update templates from ~/Projects
 
@@ -38,7 +39,7 @@ For each project type, check for MCP server configurations in the projects:
 3. Identify common MCP servers used across projects of the same type
 4. Update the template `.claude/settings.json` files:
    - `mobile-apps/.claude/settings.json` - Include common MCP servers for mobile projects (e.g., mobile-mcp)
-   - `web-apps/.claude/settings.json` - Include common MCP servers for web projects (e.g., playwright)
+   - `web-apps/.mcp.json` - Include common MCP servers for web projects
 5. Keep only MCP servers that are commonly used or essential for that project type
 
 ## Part 3: Sync scripts to projects
