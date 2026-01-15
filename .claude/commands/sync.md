@@ -34,11 +34,11 @@ Scan all projects in `~/Projects` that have a AGENTS.md file:
 
 For each project type, check for MCP server configurations in the projects:
 
-1. Check for `.claude/settings.json` files in projects of each type (mobile and web)
+1. Check for `.mcp.json` files in projects of each type (mobile and web)
 2. Extract the `mcpServers` configuration from each project
 3. Identify common MCP servers used across projects of the same type
-4. Update the template `.claude/settings.json` files:
-   - `mobile-apps/.claude/settings.json` - Include common MCP servers for mobile projects (e.g., mobile-mcp)
+4. Update the template `.mcp.json` files:
+   - `mobile-apps/.mcp.json` - Include common MCP servers for mobile projects (e.g., mobile-mcp)
    - `web-apps/.mcp.json` - Include common MCP servers for web projects
 5. Keep only MCP servers that are commonly used or essential for that project type
 
