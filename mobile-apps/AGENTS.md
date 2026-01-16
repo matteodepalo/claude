@@ -41,7 +41,31 @@ Use the following agents proactively for their corresponding tasks:
 git add -A && git commit -m "Description of changes" && git push
 ```
 
-## CRITICAL: E2E Testing Requirements
+### MANDATORY: Run All Tests Before Releasing
+
+**Before ANY release or deployment, ALL test suites MUST pass.**
+
+```bash
+# Run all tests before releasing
+npm test         # Unit tests
+npm run test:e2e # E2E tests (requires Metro)
+```
+
+**Do NOT release if any test fails.** Fix failing tests before proceeding with the release.
+
+## Testing Strategy
+
+**Philosophy**: Use Jest for comprehensive logic testing, Maestro for critical happy paths and persistence verification.
+
+### Test Types and When to Use
+
+| Test Type | When to Use | Location |
+|-----------|-------------|----------|
+| **Unit Tests (Jest)** | Pure logic, utilities, edge cases | `src/__tests__/utils/` |
+| **Component Tests (Jest)** | Screen rendering with mocked state | `src/__tests__/components/` |
+| **E2E Tests (Maestro)** | Happy paths, persistence, full integration | `.maestro/flows/` |
+
+### E2E Testing Requirements
 
 **Every feature addition, removal, or change MUST have a corresponding E2E test.**
 
