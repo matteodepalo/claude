@@ -94,6 +94,37 @@ RALPH CONTINUE - [N] stories remaining
 - Keep CI green
 - Read Codebase Patterns before starting'
 
+CONSOLIDATE_PROMPT='# Consolidate Learnings to AGENTS.md
+
+Review `progress.txt` and extract any **valuable, reusable patterns** worth persisting to `AGENTS.md`.
+
+## What to Look For
+
+1. **Codebase patterns** - Recurring code structures, naming conventions, file organization
+2. **Gotchas** - Non-obvious issues that caused problems and how to avoid them
+3. **Testing patterns** - How to test specific features in this codebase
+4. **Integration notes** - How external services (Square, Fly.io, etc.) are used
+
+## What NOT to Add
+
+- Story-specific implementation details
+- Temporary workarounds
+- Patterns already documented in AGENTS.md
+- Obvious or trivial information
+
+## Your Task
+
+1. Read `progress.txt` (especially the Codebase Patterns section)
+2. Read current `AGENTS.md`
+3. Identify patterns from progress.txt that are:
+   - Reusable across future work
+   - Not already in AGENTS.md
+   - Worth remembering long-term
+4. If any valuable patterns exist, append them to the appropriate section in `AGENTS.md`
+5. If no patterns worth adding, just say "No new patterns to consolidate"
+
+Keep additions concise and actionable. Format consistently with existing AGENTS.md style.'
+
 log() {
     echo -e "${BLUE}[ralph]${NC} $1"
 }
@@ -175,6 +206,22 @@ init_progress() {
 # Count remaining stories
 count_remaining_stories() {
     jq '[.userStories[] | select(.passes == false)] | length' "$PRD_FILE" 2>/dev/null || echo "?"
+}
+
+# Consolidate learnings from progress.txt to AGENTS.md
+consolidate_learnings() {
+    if [ ! -f "$PROGRESS_FILE" ]; then
+        log "No progress file to consolidate"
+        return 0
+    fi
+
+    log "Consolidating learnings to AGENTS.md..."
+
+    if claude -p "$CONSOLIDATE_PROMPT" --print 2>&1; then
+        success "Learnings consolidated"
+    else
+        warn "Failed to consolidate learnings"
+    fi
 }
 
 # Check if all stories are complete
@@ -268,6 +315,9 @@ main() {
             sleep $DELAY_BETWEEN_ITERATIONS
         fi
     done
+
+    # Consolidate learnings to AGENTS.md
+    consolidate_learnings
 
     # Final status
     local remaining=$(count_remaining_stories)
