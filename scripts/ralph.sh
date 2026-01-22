@@ -34,7 +34,7 @@ You are an autonomous coding agent. Implement the next incomplete user story fro
 4. **Pick story**: Select the **highest priority** user story where `passes: false`
 5. **Implement**: Complete that single user story
 6. **Quality checks**: Run typecheck, lint, test - whatever the project requires
-7. **Update AGENTS.md**: If you discover reusable patterns, add them
+7. **Update AGENTS.md**: Only if you discover patterns that are generic and applicable to ANY workflow (not specific to this story)
 8. **Commit**: If checks pass, commit ALL changes with message: `feat: [Story ID] - [Story Title]`
 9. **Update PRD**: Set `passes: true` for the completed story in `prd.json`
 10. **Log progress**: Append to `progress.txt`
@@ -55,7 +55,7 @@ APPEND to progress.txt (never replace):
 
 ## Consolidate Patterns
 
-If you discover a **reusable pattern**, add it to `## Codebase Patterns` at the TOP of progress.txt:
+If you discover a **generic, reusable pattern** (applicable to ANY workflow, not just this feature), add it to `## Codebase Patterns` at the TOP of progress.txt:
 
 ```
 ## Codebase Patterns
@@ -96,7 +96,9 @@ RALPH CONTINUE - [N] stories remaining
 
 CONSOLIDATE_PROMPT='# Consolidate Learnings to AGENTS.md
 
-Review `progress.txt` and extract any **valuable, reusable patterns** worth persisting to `AGENTS.md`.
+Review `progress.txt` and extract any **generic, reusable patterns** worth persisting to `AGENTS.md`.
+
+**IMPORTANT:** Only add patterns that are applicable to ANY future workflow, not patterns specific to the current feature being implemented.
 
 ## What to Look For
 
@@ -111,12 +113,14 @@ Review `progress.txt` and extract any **valuable, reusable patterns** worth pers
 - Temporary workarounds
 - Patterns already documented in AGENTS.md
 - Obvious or trivial information
+- Patterns specific to the current feature/workflow (AGENTS.md is for GENERIC patterns applicable to ANY future work)
 
 ## Your Task
 
 1. Read `progress.txt` (especially the Codebase Patterns section)
 2. Read current `AGENTS.md`
 3. Identify patterns from progress.txt that are:
+   - **Generic and applicable to ANY workflow** (not specific to current feature)
    - Reusable across future work
    - Not already in AGENTS.md
    - Worth remembering long-term
