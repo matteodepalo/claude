@@ -4,35 +4,6 @@ This file contains project-specific instructions for Claude Code and other AI co
 
 **Important**: When the user tells you to use a certain pattern or workflow, add it to this file so it's remembered in future sessions.
 
-## Agent Usage
-
-Use the following agents proactively for their corresponding tasks:
-
-- **feature-architect**: BEFORE any code change, use this agent to analyze the codebase, identify refactoring opportunities, and create an implementation plan
-- **codebase-researcher**: When you need to understand existing patterns, architecture, or implementation details
-- **releaser**: When asked to deploy, release, ship, or publish, use this agent to handle the release process
-
-### MANDATORY: Code Review After Every Change
-
-**The code-change-reviewer agent MUST be called after ANY code change, no matter how small.**
-
-**Workflow:**
-1. Make your code changes
-2. **IMMEDIATELY** call the code-change-reviewer agent
-3. **Address ALL issues found, even minor ones** - do not skip or dismiss any issues
-4. Then run tests
-
-### MANDATORY: Test After Every Change
-
-**The test-runner agent MUST be called after ANY code change to run the test suite.**
-
-**Preferred approach (with Metro hot reload):**
-1. Keep Metro running: `npm run start:e2e` (in a separate terminal)
-2. Make code changes (Metro hot reloads automatically)
-3. Run tests: `npm run test:e2e` - no rebuild needed!
-
-**Running specific tests:** `npm run test:e2e:single .maestro/flows/<path-to-test>.yaml`
-
 ### MANDATORY: Push Changes to GitHub
 
 **After completing ANY code change, ALWAYS commit and push to GitHub.**
@@ -71,16 +42,14 @@ npm run test:e2e # E2E tests (requires Metro)
 
 1. **Always create/update E2E tests** when implementing features
 2. **Use Maestro E2E tests** (`npm run test:e2e`) - tests are in `.maestro/flows/`
-3. **Use mobile-mcp for manual testing** when you need visual verification
-4. **TestID convention**: Always add `testID` props to new UI elements
+3. **TestID convention**: Always add `testID` props to new UI elements
 
 ### Debugging Failing E2E Tests
 
-**IMPORTANT: Before increasing timeouts, ALWAYS use mobile-mcp to investigate first.**
+**IMPORTANT: Before increasing timeouts, ALWAYS investigate first.**
 
-1. Use `mobile_take_screenshot` to see actual screen state
-2. Use `mobile_list_elements_on_screen` to verify elements in accessibility tree
-3. Fix the actual issue rather than blindly increasing timeouts
+1. Check actual screen state to verify elements are present
+2. Fix the actual issue rather than blindly increasing timeouts
 
 Common issues:
 - Element not found → Add `testID` prop
