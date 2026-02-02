@@ -21,10 +21,8 @@ settings/         # User-level Claude Code settings
   settings.json   # Synced from ~/.claude/settings.json
 mobile-apps/      # Template for React Native/Expo projects
   AGENTS.md
-  .mcp.json
 web-apps/         # Template for React Router/Remix projects
   AGENTS.md
-  .mcp.json
 ```
 
 ## Skills
@@ -99,7 +97,6 @@ Projects to curate AGENTS.md files for are located in `~/Projects`:
 
 1. Copy the appropriate template directory (`mobile-apps/` or `web-apps/`) contents to your new project:
    - `AGENTS.md` - Project instructions
-   - `.mcp.json` - Project configuration
 2. Fill in project-specific details (overview, key files, environment setup)
 
 ## Commands
