@@ -10,6 +10,15 @@ The source of truth is `~/.claude/`. Copy all files from there to this repositor
 4. Sync user settings: Copy `~/.claude/settings.json` to `settings/settings.json` in this repo (this includes enabled plugins, MCP servers, and other user preferences)
 5. Sync global instructions: If `~/.claude/CLAUDE.md` exists, copy it to `CLAUDE.md` in this repo root. If it doesn't exist but `CLAUDE.md` exists in the repo, copy it TO `~/.claude/CLAUDE.md`
 
+## Part 1.5: Sync plugins
+
+Sync plugin configuration from `~/.claude/plugins/` to `plugins/` in this repo:
+
+1. Copy `~/.claude/plugins/installed_plugins.json` to `plugins/installed_plugins.json`
+2. Copy `~/.claude/plugins/known_marketplaces.json` to `plugins/known_marketplaces.json`
+3. Do NOT copy the `cache/` directory (it contains large downloaded plugin files that shouldn't be in git)
+4. The `enabledPlugins` in `settings.json` (synced in Part 1 step 4) controls which plugins are active — this step captures which plugins are installed and their versions
+
 ## Part 2: Update templates from ~/Projects
 
 Scan all projects in `~/Projects` that have a AGENTS.md file:

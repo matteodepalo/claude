@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "plugins": {
+    "supabase@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/supabase/205b6e0b3036",
+        "version": "205b6e0b3036",
+        "installedAt": "2025-12-16T11:16:40.236Z",
+        "lastUpdated": "2026-03-06T08:54:58.521Z"
+      }
+    ],
+    "security-guidance@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/security-guidance/205b6e0b3036",
+        "version": "205b6e0b3036",
+        "installedAt": "2025-12-16T11:17:35.706Z",
+        "lastUpdated": "2026-03-06T08:54:58.522Z"
+      }
+    ],
+    "frontend-design@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/frontend-design/205b6e0b3036",
+        "version": "205b6e0b3036",
+        "installedAt": "2026-01-10T15:07:21.840Z",
+        "lastUpdated": "2026-03-06T08:54:58.522Z"
+      }
+    ],
+    "linear@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/linear/205b6e0b3036",
+        "version": "205b6e0b3036",
+        "installedAt": "2026-03-09T10:36:40.101Z",
+        "lastUpdated": "2026-03-09T10:36:40.101Z",
+        "gitCommitSha": "205b6e0b30366a969412d9aab7b99bea99d58db1"
+      }
+    ]
+  }
+}
