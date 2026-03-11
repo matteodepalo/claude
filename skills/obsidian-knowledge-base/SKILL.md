@@ -92,15 +92,6 @@ obsidian vault=knowledge append path="Coffee/Moka.md" content="\n\n## New Sectio
 obsidian vault=knowledge read path="Coffee/Moka.md"
 ```
 
-### Manage tasks
-```bash
-# List open tasks with line numbers
-obsidian vault=knowledge tasks path="Training/Training plan.md" todo verbose
-
-# Mark a task done by line number
-obsidian vault=knowledge task path="Training/Training plan.md" line=15 done
-```
-
 ### Update frontmatter properties
 ```bash
 obsidian vault=knowledge property:set path="Coffee/Moka.md" name=tags value="coffee,brewing,recipe" type=list
