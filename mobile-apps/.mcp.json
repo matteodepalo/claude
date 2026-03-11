@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "Sentry": {
+      "type": "http",
+      "url": "https://mcp.sentry.dev/mcp"
+    },
     "mobile-mcp": {
       "command": "npx",
       "args": ["-y", "@anthropic/mobile-mcp@latest"]

@@ -45,7 +45,7 @@ npm run test:ui       # Run tests with Playwright UI
 
 ## Tech Stack
 
-- **Framework**: React Router v7 (Remix)
+- **Framework**: React Router v7 (formerly Remix)
 - **Styling**: Tailwind CSS v4
 
 <!-- Add project-specific tech stack details here -->

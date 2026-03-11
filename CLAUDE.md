@@ -11,3 +11,7 @@ When answering questions:
    - Technical specifications and compatibility
 2. Cite sources when providing verified information
 3. If web search returns conflicting information, present the discrepancy to the user
+
+## Obsidian Knowledge Base
+
+Proactively search the Obsidian knowledge base (via `qmd` CLI) when answering questions that might have relevant personal notes - topics include cooking, coffee, training/nutrition, financial planning, meditation, interview prep, bonsai, travel, product ideas, LeetCode solutions, measurements, and more. Use the `obsidian-knowledge-base` skill or run `qmd search`/`qmd query` directly. The user's knowledge base often contains context that improves answers.

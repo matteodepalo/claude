@@ -4,37 +4,37 @@
     "supabase@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/supabase/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/supabase/bd041495bd2a",
+        "version": "bd041495bd2a",
         "installedAt": "2025-12-16T11:16:40.236Z",
-        "lastUpdated": "2026-03-06T08:54:58.521Z"
+        "lastUpdated": "2026-03-11T12:13:45.939Z"
       }
     ],
     "security-guidance@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/security-guidance/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/security-guidance/bd041495bd2a",
+        "version": "bd041495bd2a",
         "installedAt": "2025-12-16T11:17:35.706Z",
-        "lastUpdated": "2026-03-06T08:54:58.522Z"
+        "lastUpdated": "2026-03-11T12:13:45.940Z"
       }
     ],
     "frontend-design@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/frontend-design/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/frontend-design/bd041495bd2a",
+        "version": "bd041495bd2a",
         "installedAt": "2026-01-10T15:07:21.840Z",
-        "lastUpdated": "2026-03-06T08:54:58.522Z"
+        "lastUpdated": "2026-03-11T12:13:45.940Z"
       }
     ],
     "linear@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/linear/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/matteodepalo/.claude/plugins/cache/claude-plugins-official/linear/bd041495bd2a",
+        "version": "bd041495bd2a",
         "installedAt": "2026-03-09T10:36:40.101Z",
-        "lastUpdated": "2026-03-09T10:36:40.101Z",
+        "lastUpdated": "2026-03-11T12:13:45.939Z",
         "gitCommitSha": "205b6e0b30366a969412d9aab7b99bea99d58db1"
       }
     ]
