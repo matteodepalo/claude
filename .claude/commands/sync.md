@@ -51,26 +51,7 @@ For each project type, check for MCP server configurations in the projects:
    - `web-apps/.mcp.json` - Include common MCP servers for web projects
 5. Keep only MCP servers that are commonly used or essential for that project type
 
-## Part 3: Sync scripts to projects
-
-For each project in `~/Projects` that has an AGENTS.md file:
-
-1. Copy `scripts/ralph.sh` from this repo to the project root
-2. Ensure the script is executable (`chmod +x ralph.sh`)
-
-This keeps the ralph automation script in sync across all projects.
-
-## Part 4: Sync agents to project AGENTS.md files
-
-For each project in `~/Projects` that has a AGENTS.md file with an "Agent Usage" section:
-
-1. Compare the agents listed in the project's AGENTS.md against all agents in `~/.claude/agents/`
-2. For any agent in `~/.claude/agents/` that is NOT listed in the project's Agent Usage section, add it
-3. Use this format for new agent entries: `- **agent-name**: <description from agent file>`
-4. Insert new agents at the top of the agent list (after the intro text, before existing agents)
-5. Do NOT remove any project-specific agents that aren't in `~/.claude/agents/` (they may be custom to that project)
-
-## Part 5: Finish
+## Part 3: Finish
 
 1. Report what was synced and updated
 2. If changes were made, commit and push to GitHub with a descriptive message

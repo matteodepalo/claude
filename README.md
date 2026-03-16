@@ -23,8 +23,7 @@ Run `/sync` in Claude Code to backup any changes from `~/.claude/` to this repo.
 ├── agents/                 # Custom agent definitions
 ├── .claude/commands/       # Custom slash commands (like /sync)
 ├── scripts/
-│   ├── restore.sh         # Restore config to new machine
-│   └── ralph.sh           # Autonomous PRD implementation loop
+│   └── restore.sh         # Restore config to new machine
 ├── CLAUDE.md              # Global instructions for all projects
 ├── mobile-apps/           # Template for React Native/Expo projects
 │   ├── AGENTS.md
